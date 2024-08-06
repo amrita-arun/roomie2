@@ -20,9 +20,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct roomie2App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var user = User()
     
     var body: some Scene {
-        
         WindowGroup {
             ContentView()
         }

@@ -6,3 +6,65 @@
 //
 
 import Foundation
+import SwiftUI
+
+struct LogInView: View {
+    @State private var username: String = ""
+    @State private var password: String = ""
+    @State private var showingProfileForm = false
+
+    var body: some View {
+        NavigationStack {
+            VStack {
+                Text("Welcome to Roomie")
+                    .font(.largeTitle)
+                    .padding(.bottom, 40)
+
+                TextField("Username", text: $username)
+                    .padding()
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(5.0)
+                    .autocapitalization(.none)
+
+                SecureField("Password", text: $password)
+                    .padding()
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(5.0)
+                    .autocapitalization(.none)
+
+                Button(action: {
+                    // Handle login action here
+                    // For now, we'll simply navigate to the ProfileFormView
+                    showingProfileForm = true
+                }) {
+                    Text("Login")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(5.0)
+                }
+                .padding(.top, 20)
+                .disabled(username.isEmpty || password.isEmpty)
+                
+                Button(action: {
+                    showingProfileForm = true
+                }) {
+                    Text("Don't have an account? Sign up!")
+                        .padding()
+                }
+                .navigationDestination(isPresented: $showingProfileForm) {
+                    ProfileFormView(name: "", username: "", password: "").environmentObject(User())
+                }
+                Spacer()
+            }
+            .padding()
+        }
+    }
+}
+
+struct LogInView_Previews: PreviewProvider {
+    static var previews: some View {
+        LogInView()
+    }
+}

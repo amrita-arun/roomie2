@@ -23,6 +23,7 @@
 		84A93C8E2C62C7CC00FEB700 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C8D2C62C7CC00FEB700 /* HomeView.swift */; };
 		84A93C902C62C7DD00FEB700 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C8F2C62C7DD00FEB700 /* LogInView.swift */; };
 		84A93C922C62C7EF00FEB700 /* ProfileFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C912C62C7EF00FEB700 /* ProfileFormView.swift */; };
+		84A93C942C62C85600FEB700 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C932C62C85600FEB700 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		84A93C8D2C62C7CC00FEB700 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		84A93C8F2C62C7DD00FEB700 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		84A93C912C62C7EF00FEB700 /* ProfileFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormView.swift; sourceTree = "<group>"; };
+		84A93C932C62C85600FEB700 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				84A93C852C62C77600FEB700 /* Roommate.swift */,
 				84A93C872C62C78300FEB700 /* Chore.swift */,
 				84A93C892C62C79600FEB700 /* GroceryItem.swift */,
+				84A93C932C62C85600FEB700 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				84A93C902C62C7DD00FEB700 /* LogInView.swift in Sources */,
 				84A93C8C2C62C7B500FEB700 /* ProfileView.swift in Sources */,
 				84A93C622C6295AE00FEB700 /* roomie2App.swift in Sources */,
+				84A93C942C62C85600FEB700 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
