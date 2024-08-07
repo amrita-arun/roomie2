@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
@@ -20,11 +22,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct roomie2App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var user = User()
+    @StateObject var viewModel = AuthViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(viewModel) //added
         }
     }
 }

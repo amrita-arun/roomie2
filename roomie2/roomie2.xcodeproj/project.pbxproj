@@ -20,10 +20,11 @@
 		84A93C882C62C78300FEB700 /* Chore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C872C62C78300FEB700 /* Chore.swift */; };
 		84A93C8A2C62C79600FEB700 /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C892C62C79600FEB700 /* GroceryItem.swift */; };
 		84A93C8C2C62C7B500FEB700 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C8B2C62C7B500FEB700 /* ProfileView.swift */; };
-		84A93C8E2C62C7CC00FEB700 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C8D2C62C7CC00FEB700 /* HomeView.swift */; };
 		84A93C902C62C7DD00FEB700 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C8F2C62C7DD00FEB700 /* LogInView.swift */; };
 		84A93C922C62C7EF00FEB700 /* ProfileFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C912C62C7EF00FEB700 /* ProfileFormView.swift */; };
 		84A93C942C62C85600FEB700 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C932C62C85600FEB700 /* User.swift */; };
+		84A93C982C62D86900FEB700 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C972C62D86800FEB700 /* AuthViewModel.swift */; };
+		84A93C9A2C633C0C00FEB700 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C992C633C0C00FEB700 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,10 +40,11 @@
 		84A93C872C62C78300FEB700 /* Chore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chore.swift; sourceTree = "<group>"; };
 		84A93C892C62C79600FEB700 /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
 		84A93C8B2C62C7B500FEB700 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		84A93C8D2C62C7CC00FEB700 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		84A93C8F2C62C7DD00FEB700 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		84A93C912C62C7EF00FEB700 /* ProfileFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormView.swift; sourceTree = "<group>"; };
 		84A93C932C62C85600FEB700 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		84A93C972C62D86800FEB700 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		84A93C992C633C0C00FEB700 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,7 +158,7 @@
 		84A93C802C62C72B00FEB700 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				84A93C8D2C62C7CC00FEB700 /* HomeView.swift */,
+				84A93C992C633C0C00FEB700 /* HomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -164,6 +166,8 @@
 		84A93C812C62C73000FEB700 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				84A93C962C62D80D00FEB700 /* ViewModel */,
+				84A93C952C62D80300FEB700 /* View */,
 				84A93C8F2C62C7DD00FEB700 /* LogInView.swift */,
 			);
 			path = Authentication;
@@ -175,6 +179,21 @@
 				84A93C912C62C7EF00FEB700 /* ProfileFormView.swift */,
 			);
 			path = ProfileForm;
+			sourceTree = "<group>";
+		};
+		84A93C952C62D80300FEB700 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84A93C962C62D80D00FEB700 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84A93C972C62D86800FEB700 /* AuthViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,9 +282,10 @@
 				84A93C842C62C76600FEB700 /* House.swift in Sources */,
 				84A93C922C62C7EF00FEB700 /* ProfileFormView.swift in Sources */,
 				84A93C8A2C62C79600FEB700 /* GroceryItem.swift in Sources */,
-				84A93C8E2C62C7CC00FEB700 /* HomeView.swift in Sources */,
 				84A93C902C62C7DD00FEB700 /* LogInView.swift in Sources */,
+				84A93C982C62D86900FEB700 /* AuthViewModel.swift in Sources */,
 				84A93C8C2C62C7B500FEB700 /* ProfileView.swift in Sources */,
+				84A93C9A2C633C0C00FEB700 /* HomeView.swift in Sources */,
 				84A93C622C6295AE00FEB700 /* roomie2App.swift in Sources */,
 				84A93C942C62C85600FEB700 /* User.swift in Sources */,
 			);

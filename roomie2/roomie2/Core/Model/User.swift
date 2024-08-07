@@ -8,9 +8,10 @@
 import Foundation
 
 class User: ObservableObject {
+    @Published var uid = ""
     @Published var name = ""
     @Published var pronouns: [String] = []
-    @Published var username = ""
+    @Published var email = ""
     @Published var password = ""
     @Published var chorePreferences: [String] = []
     @Published var availability: [String] = []
