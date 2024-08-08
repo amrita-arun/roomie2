@@ -18,7 +18,7 @@ struct Option: Identifiable {
 struct ProfileFormView : View {
     @EnvironmentObject var user: User
     @State var name: String
-    @State var email: String
+    @State var username: String
     @State var password: String
 
     let pronouns = [
@@ -54,12 +54,12 @@ struct ProfileFormView : View {
                     ))
                 }
                 
-                Text("Email")
+                Text("Username")
                     .padding(.top, 16)
                     .padding(.horizontal, 9)
                 TextField(
                     "janedoe",
-                    text: self.$user.email
+                    text: self.$user.username
                 )
                 .padding()
                 .autocapitalization(.none)
@@ -80,7 +80,7 @@ struct ProfileFormView : View {
                         .buttonStyle(.bordered)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 30)
-                        .disabled(self.user.name.isEmpty || self.user.pronouns.isEmpty || self.user.email.isEmpty || self.user.password.isEmpty)
+                        .disabled(self.user.name.isEmpty || self.user.pronouns.isEmpty || self.user.username.isEmpty || self.user.password.isEmpty)
                 }
             }
             .padding()
@@ -336,9 +336,6 @@ struct ThirdScreen : View {
 
 struct FourthScreen : View {
     @EnvironmentObject var user: User
-    @EnvironmentObject var viewModel: AuthViewModel
-    @State private var showHomeView = false
-
 
     let communicationPreferences = [
         Option(name: "Household Rules and Expectations"),
@@ -376,43 +373,18 @@ struct FourthScreen : View {
                 }
                 
                 HStack(alignment: .center) {
-                    Button {
-                        Task {
-                            viewModel.createUser(email: self.user.email, password: self.user.password, pronouns: self.user.pronouns, chorePreferences: self.user.chorePreferences, availability: self.user.availability, cookingPref: self.user.cookingPref, dietaryPref: self.user.dietaryPref, noiseLevels: self.user.noiseLevels, guestFreq: self.user.guestFreq, guestPref: self.user.guestPref, communicationPref: self.user.communicationPref)
-                        }
-                    } label: {
-                        Text("Sign Up")
-                    }
-                    .frame(maxWidth: .infinity)
-                    .buttonStyle(.bordered)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 30)
-                    .disabled(self.user.communicationPref.isEmpty)
-                    .onChange(of: viewModel.userLoggedIn) { loggedIn in
-                        if loggedIn {
-                            showHomeView = true
-                            viewModel.userLoggedIn = false
-                        }
-                    }
-                    .navigationDestination(isPresented: $showHomeView) {
-                        HomeView()
-                    }
-                    /*
                     NavigationLink("Finish", destination: PreferenceDisplay().environmentObject(user))
                         .frame(maxWidth: .infinity)
                         .buttonStyle(.bordered)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 30)
                         .disabled(self.user.communicationPref.isEmpty)
-                     */
                     
                 }
             }
         }
         .padding()
         .navigationTitle("Roomie Setup")
-        .navigationBarBackButtonHidden(true)
-
 
         Spacer()
         
@@ -426,7 +398,7 @@ struct PreferenceDisplay: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
                 Text(user.name)
-                Text(user.email)
+                Text(user.username)
                 Text(user.password)
 
                 PreferenceSection(title: "Pronouns", preferences: user.pronouns)
@@ -501,7 +473,7 @@ struct OptionButton: View {
     
     struct ProfileFormView_Previews: PreviewProvider {
         static var previews: some View {
-            ProfileFormView(name: "", email: "", password: "")
+            ProfileFormView(name: "", username: "", password: "")
                 .environmentObject(User()) // For the preview, this ensures the User object is provided
 
         }
