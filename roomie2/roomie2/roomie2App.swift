@@ -21,10 +21,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct roomie2App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var user = User()
+    @StateObject var viewModel = AuthViewModel()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(viewModel) //added
+
         }
     }
 }

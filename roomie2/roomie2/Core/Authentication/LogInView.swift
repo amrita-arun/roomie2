@@ -9,9 +9,12 @@ import Foundation
 import SwiftUI
 
 struct LogInView: View {
-    @State private var username: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
     @State private var showingProfileForm = false
+    @State private var showHomeView = false
+        @EnvironmentObject var viewModel: AuthViewModel
+
 
     var body: some View {
         NavigationStack {
@@ -20,7 +23,7 @@ struct LogInView: View {
                     .font(.largeTitle)
                     .padding(.bottom, 40)
 
-                TextField("Username", text: $username)
+                TextField("email", text: $email)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(5.0)
@@ -35,7 +38,10 @@ struct LogInView: View {
                 Button(action: {
                     // Handle login action here
                     // For now, we'll simply navigate to the ProfileFormView
-                    showingProfileForm = true
+                    Task {
+                       viewModel.signIn(withEmail: email, password: password)
+                   }
+                    //showingProfileForm = true
                 }) {
                     Text("Login")
                         .frame(maxWidth: .infinity)
@@ -45,7 +51,7 @@ struct LogInView: View {
                         .cornerRadius(5.0)
                 }
                 .padding(.top, 20)
-                .disabled(username.isEmpty || password.isEmpty)
+                .disabled(email.isEmpty || password.isEmpty)
                 
                 Button(action: {
                     showingProfileForm = true
@@ -54,14 +60,24 @@ struct LogInView: View {
                         .padding()
                 }
                 .navigationDestination(isPresented: $showingProfileForm) {
-                    ProfileFormView(name: "", username: "", password: "").environmentObject(User())
+                    ProfileFormView(name: "", email: "", password: "").environmentObject(User())
                 }
+                .onChange(of: viewModel.userLoggedIn) { loggedIn in
+                        if loggedIn {
+                            showHomeView = true
+                            viewModel.userLoggedIn = false
+                        }
+                    }
+                    .navigationDestination(isPresented: $showHomeView) {
+                        HomeView()
+                    }
+                }.navigationBarBackButtonHidden(true)
                 Spacer()
             }
             .padding()
         }
     }
-}
+
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
