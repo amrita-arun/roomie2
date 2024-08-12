@@ -40,8 +40,11 @@ class AuthViewModel: ObservableObject {
             } else {
                 self?.userSession = authResult?.user
                 print("User signs in successfully")
+                self?.userLoggedIn = true
             }
         }
+
+        /*
         
         if isUserLoggedIn() {
             userLoggedIn = true
@@ -50,6 +53,7 @@ class AuthViewModel: ObservableObject {
             userLoggedIn = false
             print("user not logged in")
         }
+         */
     }
     
     func createUser(email: String, password: String, pronouns: [String], chorePreferences: [String], availability: [String], cookingPref: [String], dietaryPref: [String], noiseLevels: [String], guestFreq: [String] = [], guestPref: [String], communicationPref: [String]) async {
@@ -57,10 +61,14 @@ class AuthViewModel: ObservableObject {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
                 print("Couldn't complete sign up")
+                print("Error signing up: %@", error!)
           } else {
             print("User signs up successfully")
+              self.userLoggedIn = true
           }
         }
+
+        /*
         if isUserLoggedIn() {
             userLoggedIn = true
             print("user logged in")
@@ -68,6 +76,7 @@ class AuthViewModel: ObservableObject {
             userLoggedIn = false
             print("user not logged in")
         }
+         */
         
         let userData: [String: Any] = [
           "pronouns": pronouns,
