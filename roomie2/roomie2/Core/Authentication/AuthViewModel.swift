@@ -19,6 +19,7 @@ class AuthViewModel: ObservableObject {
     var uid: String
     @Published var userLoggedIn: Bool = false
     @Published var userSession: FirebaseAuth.User?
+    let db = Firestore.firestore()
 
 
     /*@Published var userSession: FirebaseAuth.User?
@@ -51,7 +52,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func createUser(email: String, password: String, pronouns: [String], chorePreferences: [String], availability: [String], cookingPref: [String], dietaryPref: [String], noiseLevels: [String], guestFreq: [String] = [], guestPref: [String], communicationPref: [String]) {
+    func createUser(email: String, password: String, pronouns: [String], chorePreferences: [String], availability: [String], cookingPref: [String], dietaryPref: [String], noiseLevels: [String], guestFreq: [String] = [], guestPref: [String], communicationPref: [String]) async {
         
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
@@ -67,10 +68,27 @@ class AuthViewModel: ObservableObject {
             userLoggedIn = false
             print("user not logged in")
         }
+        
+        let userData: [String: Any] = [
+          "pronouns": pronouns,
+          "chorePrefs": chorePreferences,
+          "availability": availability,
+          "cookingPref": cookingPref,
+          "dietaryPref": dietaryPref,
+          "noiseLevels": noiseLevels,
+          "guestFreq": guestFreq,
+          "communicationPref": communicationPref
+        ]
+        
+        do {
+          try await db.collection("data").document(email).setData(userData)
+          print("Document successfully written!")
+        } catch {
+          print("Error writing document: \(error)")
+        }
     }
     
     func isUserLoggedIn() -> Bool {
-        self.userSession = 
         print(Auth.auth().currentUser?.email ?? "No email found")
         return Auth.auth().currentUser != nil
     }
@@ -98,7 +116,13 @@ class AuthViewModel: ObservableObject {
     //}
 
     func signOut() {
-        
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+            userLoggedIn = false
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
+        }
     }
     
     func deleteAccount() {

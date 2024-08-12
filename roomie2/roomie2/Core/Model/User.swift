@@ -23,4 +23,5 @@ class User: ObservableObject {
 
 
     // Add other properties as needed
+
 }

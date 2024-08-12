@@ -378,7 +378,7 @@ struct FourthScreen : View {
                 HStack(alignment: .center) {
                     Button {
                        Task {
-                           viewModel.createUser(email: self.user.email, password: self.user.password, pronouns: self.user.pronouns, chorePreferences: self.user.chorePreferences, availability: self.user.availability, cookingPref: self.user.cookingPref, dietaryPref: self.user.dietaryPref, noiseLevels: self.user.noiseLevels, guestFreq: self.user.guestFreq, guestPref: self.user.guestPref, communicationPref: self.user.communicationPref)
+                           await viewModel.createUser(email: self.user.email, password: self.user.password, pronouns: self.user.pronouns, chorePreferences: self.user.chorePreferences, availability: self.user.availability, cookingPref: self.user.cookingPref, dietaryPref: self.user.dietaryPref, noiseLevels: self.user.noiseLevels, guestFreq: self.user.guestFreq, guestPref: self.user.guestPref, communicationPref: self.user.communicationPref)
                        }
                    } label: {
                        Text("Sign Up")
