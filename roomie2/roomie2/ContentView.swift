@@ -9,11 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-
+    @EnvironmentObject var user: User
+    
     var body: some View {
         Group {
             if viewModel.isUserLoggedIn() == true {
                 HomeView()
+                    .environmentObject(user)
+                
             }
             else {
                 LogInView()

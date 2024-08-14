@@ -30,7 +30,12 @@ class AuthViewModel: ObservableObject {
     
     init () {
         uid = ""
-        userLoggedIn = false;
+        if (isUserLoggedIn()) {
+            userLoggedIn = true;
+        }
+        else {
+            userLoggedIn = false;
+        }
     }
     
     func signIn(withEmail email: String, password: String) {
@@ -64,8 +69,8 @@ class AuthViewModel: ObservableObject {
          */
     }
     
-    func createUser(email: String, password: String, pronouns: [String], chorePreferences: [String], availability: [String], cookingPref: [String], dietaryPref: [String], noiseLevels: [String], guestFreq: [String] = [], guestPref: [String], communicationPref: [String]) async {
-        
+    func createUser(email: String, password: String, pronouns: [String], chorePreferences: [String], availability: [String], cookingPref: [String], dietaryPref: [String], noiseLevels: [String], guestFreq: [String] = [], guestPref: [String], communicationPref: [String], user2: User) async {
+        self.user = user2
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
                 print("Couldn't complete sign up")
@@ -74,10 +79,7 @@ class AuthViewModel: ObservableObject {
             print("User signs up successfully")
               self.userLoggedIn = true
           }
-            Task {
-                await self.populateUser(email: email)
-                
-            }
+            
         }
 
         /*
@@ -90,6 +92,7 @@ class AuthViewModel: ObservableObject {
         }
          */
         
+        /*
         let userData: [String: Any] = [
           "pronouns": pronouns,
           "chorePrefs": chorePreferences,
@@ -100,13 +103,23 @@ class AuthViewModel: ObservableObject {
           "guestFreq": guestFreq,
           "communicationPref": communicationPref
         ]
+         */
+        
+        self.user = user2
         
         do {
-          try await db.collection("data").document(email).setData(userData)
+            try await db.collection("data").document(email).setData(from: self.user)
           print("Document successfully written!")
         } catch {
           print("Error writing document: \(error)")
         }
+        
+        
+        Task {
+            await self.populateUser(email: email)
+            
+        }
+         
     }
     
     func isUserLoggedIn() -> Bool {
@@ -135,7 +148,24 @@ class AuthViewModel: ObservableObject {
     func populateUser(email: String) async -> String{
         let db = Firestore.firestore()
         let docRef = db.collection("data").document(email)
+        var newUser = User()
+        print("email:", email)
+        do {
+            let newUser = try await docRef.getDocument(as: User.self)
+            print("User: \(newUser)")
+            
+            DispatchQueue.main.async {
+                self.user = newUser
+            }
+            //print(user ?? "unable to convert user to string")
+        } catch {
+            print("Error decoding user: \(error)")
+            return ""
+        }
+        //user = newUser
 
+
+        /*
         do {
           let document = try await docRef.getDocument()
           if document.exists {
@@ -148,6 +178,7 @@ class AuthViewModel: ObservableObject {
         } catch {
           print("Error getting document: \(error)")
         }
+         */
         return "No data retrieved"
     }
     

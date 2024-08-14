@@ -16,29 +16,52 @@ struct HomeView: View {
     @EnvironmentObject var user: User
 
     var body: some View {
-        Text("Inside Home!")
-        
-        Button(action: {
-            Task {
-               viewModel.signOut()
-           }
-        }) {
-            Text("Sign Out")
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(5.0)
-        }
-        .padding(.top, 20)
-        .onChange(of: viewModel.userLoggedIn) { loggedIn in
-            if !loggedIn {
-                showLoginView = true
+        VStack {
+            Text("Inside Home!")
+            Button(action: {
+                Task {
+                    await viewModel.populateUser(email: self.viewModel.getUserEmail())
+                }
+            }) {
+                Text("Query from Firestore")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(5.0)
+            }
+            .padding(.top, 20)
+
+            
+            Button(action: {
+                Task {
+                   viewModel.signOut()
+               }
+            }) {
+                Text("Sign Out")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(5.0)
+            }
+            .padding(.top, 20)
+            .onChange(of: viewModel.userLoggedIn) { loggedIn in
+                if !loggedIn {
+                    showLoginView = true
+                }
+            }
+            .navigationDestination(isPresented: $showLoginView) {
+                LogInView()
             }
         }
-        .navigationDestination(isPresented: $showLoginView) {
-            LogInView()
+        .onAppear {
+            Task {
+                await viewModel.populateUser(email: self.viewModel.getUserEmail())
+            }
         }
+        
+        
     }
     
     /*

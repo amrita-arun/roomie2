@@ -27,6 +27,7 @@ struct roomie2App: App {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel) //added
+                .environmentObject(user)
 
         }
     }

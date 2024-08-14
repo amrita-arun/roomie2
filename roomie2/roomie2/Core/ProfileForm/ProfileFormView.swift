@@ -37,7 +37,6 @@ struct ProfileFormView : View {
                     "Jane Doe",
                     text: self.$user.name
                 ).padding()
-                
                 Text("Pronouns?")
                     .padding(.top, 16)
                     .padding(.horizontal, 9)
@@ -378,7 +377,7 @@ struct FourthScreen : View {
                 HStack(alignment: .center) {
                     Button {
                        Task {
-                           await viewModel.createUser(email: self.user.email, password: self.user.password, pronouns: self.user.pronouns, chorePreferences: self.user.chorePreferences, availability: self.user.availability, cookingPref: self.user.cookingPref, dietaryPref: self.user.dietaryPref, noiseLevels: self.user.noiseLevels, guestFreq: self.user.guestFreq, guestPref: self.user.guestPref, communicationPref: self.user.communicationPref)
+                           await viewModel.createUser(email: self.user.email, password: self.user.password, pronouns: self.user.pronouns, chorePreferences: self.user.chorePreferences, availability: self.user.availability, cookingPref: self.user.cookingPref, dietaryPref: self.user.dietaryPref, noiseLevels: self.user.noiseLevels, guestFreq: self.user.guestFreq, guestPref: self.user.guestPref, communicationPref: self.user.communicationPref, user2: self.user)
                        }
                    } label: {
                        Text("Sign Up")
@@ -396,6 +395,7 @@ struct FourthScreen : View {
                    }
                    .navigationDestination(isPresented: $showHomeView) {
                        HomeView()
+                           .environmentObject(user)
                    }
                     
                     /*

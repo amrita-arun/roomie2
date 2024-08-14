@@ -7,7 +7,7 @@
 
 import Foundation
 
-class User: ObservableObject {//, Codable {
+class User: ObservableObject, Codable, CustomStringConvertible{
     @Published var name = ""
     @Published var pronouns: [String] = []
     @Published var email = ""
@@ -21,7 +21,7 @@ class User: ObservableObject {//, Codable {
     @Published var guestPref: [String] = []
     @Published var communicationPref: [String] = []
 
-    /*
+    
     enum CodingKeys: String, CodingKey {
         case name
         case pronouns
@@ -37,7 +37,24 @@ class User: ObservableObject {//, Codable {
         case communicationPref
     }
     
+    init() { }
+    
     required init(from decoder:Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        email = try container.decodeIfPresent(String.self, forKey: .email) ?? ""
+        password = try container.decodeIfPresent(String.self, forKey: .password) ?? ""
+        pronouns = try container.decodeIfPresent([String].self, forKey: .pronouns) ?? []
+        chorePreferences = try container.decodeIfPresent([String].self, forKey: .chorePreferences) ?? []
+        availability = try container.decodeIfPresent([String].self, forKey: .availability) ?? []
+        cookingPref = try container.decodeIfPresent([String].self, forKey: .cookingPref) ?? []
+        dietaryPref = try container.decodeIfPresent([String].self, forKey: .dietaryPref) ?? []
+        noiseLevels = try container.decodeIfPresent([String].self, forKey: .noiseLevels) ?? []
+        guestFreq = try container.decodeIfPresent([String].self, forKey: .guestFreq) ?? []
+        guestPref = try container.decodeIfPresent([String].self, forKey: .guestPref) ?? []
+        communicationPref = try container.decodeIfPresent([String].self, forKey: .communicationPref) ?? []
+    }
+        /*
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decode(String.self, forKey: .name)
         email = try values.decode(String.self, forKey: .email)
@@ -51,9 +68,24 @@ class User: ObservableObject {//, Codable {
         guestFreq = try values.decode([String].self, forKey: .guestFreq)
         guestPref = try values.decode([String].self, forKey: .guestPref)
         communicationPref = try values.decode([String].self, forKey: .communicationPref)
-    }
+         */
+    //}
     
     public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(email, forKey: .email)
+        try container.encode(password, forKey: .password)
+        try container.encode(pronouns, forKey: .pronouns)
+        try container.encode(chorePreferences, forKey: .chorePreferences)
+        try container.encode(availability, forKey: .availability)
+        try container.encode(cookingPref, forKey: .cookingPref)
+        try container.encode(dietaryPref, forKey: .dietaryPref)
+        try container.encode(noiseLevels, forKey: .noiseLevels)
+        try container.encode(guestFreq, forKey: .guestFreq)
+        try container.encode(guestPref, forKey: .guestPref)
+        try container.encode(communicationPref, forKey: .communicationPref)
+        /*
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
         try container.encode(pronouns, forKey: .pronouns)
@@ -67,8 +99,27 @@ class User: ObservableObject {//, Codable {
         try container.encode(guestFreq, forKey: .guestFreq)
         try container.encode(guestPref, forKey: .guestPref)
         try container.encode(communicationPref, forKey: .communicationPref)
-
+*/
     }
-     */
+    
+    var description: String {
+        return """
+        User(
+            name: \(name),
+            email: \(email),
+            password: \(password),
+            pronouns: \(pronouns),
+            chorePreferences: \(chorePreferences),
+            availability: \(availability),
+            cookingPreferences: \(cookingPref),
+            dietaryPreferences: \(dietaryPref),
+            noiseLevels: \(noiseLevels),
+            guestFrequency: \(guestFreq),
+            guestPreferences: \(guestPref),
+            communicationPreferences: \(communicationPref)
+        )
+        """
+    }
+     
     // Add other properties as needed
 }

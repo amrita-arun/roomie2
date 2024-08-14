@@ -13,7 +13,8 @@ struct LogInView: View {
     @State private var password: String = ""
     @State private var showingProfileForm = false
     @State private var showHomeView = false
-        @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var user: User
 
 
     var body: some View {
@@ -70,6 +71,7 @@ struct LogInView: View {
                     }
                     .navigationDestination(isPresented: $showHomeView) {
                         HomeView()
+                            .environmentObject(user)
                     }
                 }.navigationBarBackButtonHidden(true)
                 Spacer()
