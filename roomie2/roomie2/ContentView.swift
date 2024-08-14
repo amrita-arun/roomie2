@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if viewModel.isUserLoggedIn() == true {
-                HomeView()
+                HomeView(user: User())
                     .environmentObject(user)
                 
             }

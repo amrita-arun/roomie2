@@ -50,10 +50,12 @@ class AuthViewModel: ObservableObject {
                 self?.userLoggedIn = true
                 
             }
+            /*
             Task {
                 var description = await self?.populateUser(email: email)
                 
             }
+             */
         }
     
 
@@ -70,7 +72,7 @@ class AuthViewModel: ObservableObject {
     }
     
     func createUser(email: String, password: String, pronouns: [String], chorePreferences: [String], availability: [String], cookingPref: [String], dietaryPref: [String], noiseLevels: [String], guestFreq: [String] = [], guestPref: [String], communicationPref: [String], user2: User) async {
-        self.user = user2
+        //self.user = user2
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
                 print("Couldn't complete sign up")
@@ -105,10 +107,10 @@ class AuthViewModel: ObservableObject {
         ]
          */
         
-        self.user = user2
+        //self.user = user2
         
         do {
-            try await db.collection("data").document(email).setData(from: self.user)
+            try await db.collection("data").document(email).setData(from: user2)
           print("Document successfully written!")
         } catch {
           print("Error writing document: \(error)")
@@ -145,7 +147,7 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func populateUser(email: String) async -> String{
+    func populateUser(email: String) async -> User{
         let db = Firestore.firestore()
         let docRef = db.collection("data").document(email)
         var newUser = User()
@@ -157,10 +159,11 @@ class AuthViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.user = newUser
             }
+            return newUser
             //print(user ?? "unable to convert user to string")
         } catch {
             print("Error decoding user: \(error)")
-            return ""
+            return User()
         }
         //user = newUser
 
@@ -179,11 +182,10 @@ class AuthViewModel: ObservableObject {
           print("Error getting document: \(error)")
         }
          */
-        return "No data retrieved"
     }
     
     func getUserEmail() -> String {
-        if (userLoggedIn) {
+        if (isUserLoggedIn()) {
             return Auth.auth().currentUser?.email ?? "No email found"
         }
         return "User not logged in"

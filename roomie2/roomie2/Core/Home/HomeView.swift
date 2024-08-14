@@ -13,25 +13,11 @@ import FirebaseFirestoreSwift
 struct HomeView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @State private var showLoginView = false
-    @EnvironmentObject var user: User
+    @State var user: User
 
     var body: some View {
         VStack {
             Text("Inside Home!")
-            Button(action: {
-                Task {
-                    await viewModel.populateUser(email: self.viewModel.getUserEmail())
-                }
-            }) {
-                Text("Query from Firestore")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(5.0)
-            }
-            .padding(.top, 20)
-
             
             Button(action: {
                 Task {
@@ -57,38 +43,39 @@ struct HomeView: View {
         }
         .onAppear {
             Task {
-                await viewModel.populateUser(email: self.viewModel.getUserEmail())
+                self.user = await viewModel.populateUser(email: self.viewModel.getUserEmail())
+                //self.user = viewModel.user ?? User()
             }
         }
         
-        
-    }
-    
-    /*
-    func populateUser() async {
-        let db = Firestore.firestore()
-        let docRef = db.collection("data").document(self.user.email)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Your Information:")
+                Text(user.name)
+                Text(user.email)
+                Text(user.password)
 
-        do {
-          let document = try await docRef.getDocument()
-          if document.exists {
-            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-            print("Document data: \(dataDescription)")
-          } else {
-            print("Document does not exist")
-          }
-        } catch {
-          print("Error getting document: \(error)")
+                PreferenceSection(title: "Pronouns", preferences: user.pronouns)
+                PreferenceSection(title: "Chore Preferences", preferences: user.chorePreferences)
+                PreferenceSection(title: "Availability", preferences: user.availability)
+                PreferenceSection(title: "Cooking Preferences", preferences: user.cookingPref)
+                PreferenceSection(title: "Dietary Preferences", preferences: user.dietaryPref)
+                
+            }
+            VStack(alignment: .leading, spacing: 10) {
+                PreferenceSection(title: "Noise Levels", preferences: user.noiseLevels)
+                PreferenceSection(title: "Guest Frequency", preferences: user.guestFreq)
+                PreferenceSection(title: "Guest Preferences", preferences: user.guestPref)
+                PreferenceSection(title: "Communication Preferences", preferences: user.communicationPref)
+            }
         }
-        
     }
-     */
 }
 
 
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(user: User())
     }
 }
