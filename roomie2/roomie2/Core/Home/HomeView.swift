@@ -6,21 +6,22 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct HomeView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @State private var showLoginView = false
-
+    @EnvironmentObject var user: User
 
     var body: some View {
         Text("Inside Home!")
+        
         Button(action: {
-            // Handle login action here
-            // For now, we'll simply navigate to the ProfileFormView
             Task {
                viewModel.signOut()
            }
-            //showingProfileForm = true
         }) {
             Text("Sign Out")
                 .frame(maxWidth: .infinity)
@@ -39,7 +40,29 @@ struct HomeView: View {
             LogInView()
         }
     }
+    
+    /*
+    func populateUser() async {
+        let db = Firestore.firestore()
+        let docRef = db.collection("data").document(self.user.email)
+
+        do {
+          let document = try await docRef.getDocument()
+          if document.exists {
+            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+            print("Document data: \(dataDescription)")
+          } else {
+            print("Document does not exist")
+          }
+        } catch {
+          print("Error getting document: \(error)")
+        }
+        
+    }
+     */
 }
+
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

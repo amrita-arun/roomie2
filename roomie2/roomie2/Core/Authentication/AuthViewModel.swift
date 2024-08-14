@@ -19,6 +19,7 @@ class AuthViewModel: ObservableObject {
     var uid: String
     @Published var userLoggedIn: Bool = false
     @Published var userSession: FirebaseAuth.User?
+    @Published var user: User?
     let db = Firestore.firestore()
 
 
@@ -37,12 +38,19 @@ class AuthViewModel: ObservableObject {
             guard self != nil else { return }
             if let error = error as? NSError {
                 print("Error: \(error.localizedDescription)")
+                return
             } else {
                 self?.userSession = authResult?.user
                 print("User signs in successfully")
                 self?.userLoggedIn = true
+                
+            }
+            Task {
+                var description = await self?.populateUser(email: email)
+                
             }
         }
+    
 
         /*
         
@@ -66,6 +74,10 @@ class AuthViewModel: ObservableObject {
             print("User signs up successfully")
               self.userLoggedIn = true
           }
+            Task {
+                await self.populateUser(email: email)
+                
+            }
         }
 
         /*
@@ -102,28 +114,6 @@ class AuthViewModel: ObservableObject {
         return Auth.auth().currentUser != nil
     }
 
-    
-        /*withEmail email: String, password: String, fullname: String, pronouns: [String], chorePreferences: [String], availability: [String], cookingPref:[String], dietaryPref: [String], noiseLevels: [String], guestFreq: [String], guestPref: [String], communicationPref: [String] *///) //async throws {
-        
-        //do {
-            /*
-            let user2 = self.user
-            let authDataResult = try await Auth.auth().createUser(withEmail: user2.email, password: user2.password)
-            let result = AuthDataResultModel(uid: authDataResult.user.uid, email: authDataResult.user.email ?? "no email")
-            
-            let result = try await Auth.auth().createUser(withEmail: self.user.email, password:  self.user.password)
-            self.userSession = result.user
-            self.user.id = result.user.uid
-            let user2 = self.user
-            //let user = User(id: result.user.uid, fullname: fullname, email: email)
-            guard let encodedUser = Firestore.Encoder.encode(user2) else { return }
-            try await Firestore.firestore().collection("users").document(user.id)
-             */
-        //} catch {
-            
-        //}
-    //}
-
     func signOut() {
         let firebaseAuth = Auth.auth()
         do {
@@ -140,5 +130,31 @@ class AuthViewModel: ObservableObject {
     
     func fetchUser() async {
         
+    }
+    
+    func populateUser(email: String) async -> String{
+        let db = Firestore.firestore()
+        let docRef = db.collection("data").document(email)
+
+        do {
+          let document = try await docRef.getDocument()
+          if document.exists {
+            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+            print("Document data: \(dataDescription)")
+              return dataDescription
+          } else {
+            print("Document does not exist")
+          }
+        } catch {
+          print("Error getting document: \(error)")
+        }
+        return "No data retrieved"
+    }
+    
+    func getUserEmail() -> String {
+        if (userLoggedIn) {
+            return Auth.auth().currentUser?.email ?? "No email found"
+        }
+        return "User not logged in"
     }
 }
