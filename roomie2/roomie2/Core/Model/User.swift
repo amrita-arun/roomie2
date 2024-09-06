@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-class User: ObservableObject, Codable, CustomStringConvertible{
+class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
+    @DocumentID var id: String? // This will store the Firestore document ID or Firebase Auth UID
     @Published var name = ""
     @Published var pronouns: [String] = []
     @Published var email = ""

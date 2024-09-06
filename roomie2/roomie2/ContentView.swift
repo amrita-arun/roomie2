@@ -10,12 +10,14 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @EnvironmentObject var user: User
+    @EnvironmentObject var house: House
     
     var body: some View {
         Group {
             if viewModel.isUserLoggedIn() == true {
                 HomeView(user: User())
                     .environmentObject(user)
+                    .environmentObject(house)
                 
             }
             else {

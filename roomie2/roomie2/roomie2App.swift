@@ -22,11 +22,13 @@ struct roomie2App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var user = User()
     @StateObject var viewModel = AuthViewModel()
+    @StateObject var house = House(name: "No name yet", createdBy: User(), createdAt: Date())
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel) //added
+                .environmentObject(house)
                 .environmentObject(user)
 
         }

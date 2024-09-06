@@ -20,6 +20,7 @@ class AuthViewModel: ObservableObject {
     @Published var userLoggedIn: Bool = false
     @Published var userSession: FirebaseAuth.User?
     @Published var user: User?
+    @Published var house: House?
     let db = Firestore.firestore()
 
 
@@ -79,6 +80,7 @@ class AuthViewModel: ObservableObject {
                 print("Error signing up: %@", error!)
           } else {
             print("User signs up successfully")
+            
               self.userLoggedIn = true
           }
             
@@ -111,7 +113,9 @@ class AuthViewModel: ObservableObject {
         
         do {
             try await db.collection("data").document(email).setData(from: user2)
-          print("Document successfully written!")
+            
+            print("Document successfully written!")
+
         } catch {
           print("Error writing document: \(error)")
         }
@@ -189,5 +193,48 @@ class AuthViewModel: ObservableObject {
             return Auth.auth().currentUser?.email ?? "No email found"
         }
         return "User not logged in"
+    }
+    
+    /*
+    
+    func createHouse(name: String, createdBy: User) async throws {
+        guard let userId = userSession?.uid else { return }
+        print("in createHouse")
+        let house = House(name: name, createdBy: createdBy)
+        let db = Firestore.firestore()
+        
+        do {
+            let documentRef = try await db.collection("houses").addDocument(from: house)
+            house.id = documentRef.documentID
+            self.house = house // Update the state with the new house
+            print("Created house")
+        } catch {
+            print("Error creating house: \(error.localizedDescription)")
+        }
+    }*/
+    
+    func createHouse(house: House) async {
+        do {
+            try await db.collection("houses").document(house.name).setData(from: house)
+            
+            print("Document successfully written!")
+
+        } catch {
+          print("Error writing document: \(error)")
+        }
+    }
+    
+
+    func addUserToHouse(houseId: String, userId: String) async throws {
+        let db = Firestore.firestore()
+        let houseRef = db.collection("houses").document(houseId)
+        
+        do {
+            try await houseRef.updateData([
+                "members": FieldValue.arrayUnion([userId])
+            ])
+        } catch {
+            print("Error adding user to house: \(error.localizedDescription)")
+        }
     }
 }
