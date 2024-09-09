@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
-    @DocumentID var id: String? // This will store the Firestore document ID or Firebase Auth UID
+    //@DocumentID var id: String? // This will store the Firestore document ID or Firebase Auth UID
     @Published var name = ""
     @Published var pronouns: [String] = []
     @Published var email = ""
@@ -23,6 +23,7 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
     @Published var guestFreq: [String] = []
     @Published var guestPref: [String] = []
     @Published var communicationPref: [String] = []
+    @Published var houses: [String] = []
 
     
     enum CodingKeys: String, CodingKey {
@@ -38,6 +39,7 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
         case guestFreq
         case guestPref
         case communicationPref
+        case houses
     }
     
     init() { }
@@ -56,6 +58,8 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
         guestFreq = try container.decodeIfPresent([String].self, forKey: .guestFreq) ?? []
         guestPref = try container.decodeIfPresent([String].self, forKey: .guestPref) ?? []
         communicationPref = try container.decodeIfPresent([String].self, forKey: .communicationPref) ?? []
+        houses = try container.decodeIfPresent([String].self, forKey: .houses) ?? []
+
     }
         /*
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -88,6 +92,8 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
         try container.encode(guestFreq, forKey: .guestFreq)
         try container.encode(guestPref, forKey: .guestPref)
         try container.encode(communicationPref, forKey: .communicationPref)
+        try container.encode(houses, forKey: .houses)
+
         /*
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
@@ -120,9 +126,9 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
             guestFrequency: \(guestFreq),
             guestPreferences: \(guestPref),
             communicationPreferences: \(communicationPref)
+            houses: \(houses)
+
         )
         """
     }
-     
-    // Add other properties as needed
 }

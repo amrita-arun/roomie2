@@ -26,6 +26,10 @@ struct CreateHouseView: View {
                 Button(action: {
                     showAddUsers = true
                     print("showAddUsers is true")
+                    user.houses.append(house.name)
+                    house.createdBy = user
+                    house.members.removeAll()
+                    house.members.append(user)
                 }) {
                     Text("Add Users")
                         .frame(maxWidth: .infinity)

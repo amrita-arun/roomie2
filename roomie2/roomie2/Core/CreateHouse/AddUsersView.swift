@@ -38,22 +38,15 @@ struct AddUsersView: View {
                .foregroundColor(.white)
                .cornerRadius(5.0)
                
-               List(searchResults) { user in
+               
+               List(searchResults) { newUser in
                    HStack {
-                       Text(user.name)
+                       Text(newUser.name)
                        Spacer()
                        Button("Add to House") {
-                           print("User from search", user)
-                           house.members.append(user)
-                           /*
-                           Task {
-                               if let houseId = houseId {
-                                   await addUserToHouse(userId: user.email)
-                               } else {
-                                   await createHouseAndAddUser(userId: user.email)
-                               }
-                           }
-                            */
+                           print("User from search", newUser)
+                           house.members.append(newUser)
+                           newUser.houses.append(house.name)
                        }
                        .padding()
                        .background(Color.green)
@@ -64,15 +57,6 @@ struct AddUsersView: View {
            }
            .padding()
            .navigationTitle("Add Users to House")
-           /*
-           .onAppear {
-               Task {
-                   if houseId == nil {
-                       await createHouse(user: user)
-                   }
-               }
-           }
-            */
            
            Button(action: {
                createHouse = true
@@ -90,12 +74,12 @@ struct AddUsersView: View {
                    .cornerRadius(5.0)
            }
            .navigationDestination(isPresented: $createHouse){
-               MemberView()
+               MemberView(user: user, house: house)
                    .environmentObject(house)
                    .environmentObject(user)
                    .environmentObject(viewModel)
            }
-           .disabled(house.members.count <= 1)
+           .disabled(house.members.count < 2)
        }
        
        func searchUsers() async {
@@ -113,30 +97,6 @@ struct AddUsersView: View {
                print("Error searching users: \(error.localizedDescription)")
            }
        }
-    
-    /*
-    func createHouseAndAddUser(userId: String) async {
-           do {
-               try await createHouse(user: user)
-               if let houseId = houseId {
-                   try await viewModel.addUserToHouse(houseId: houseId, userId: userId)
-               }
-           } catch {
-               print("Error creating house or adding user: \(error.localizedDescription)")
-           }
-       }
-     */
-       
-    /*
-    func createHouse(user: User) async {
-            do {
-                try await viewModel.createHouse(name: houseName, createdBy: user)
-                houseId = viewModel.house?.id
-            } catch {
-                print("Error creating house: \(error.localizedDescription)")
-            }
-        }
-     */
     
        func addUserToHouse(userId: String) async {
            do {

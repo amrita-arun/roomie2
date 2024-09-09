@@ -129,7 +129,7 @@ class AuthViewModel: ObservableObject {
     }
     
     func isUserLoggedIn() -> Bool {
-        print(Auth.auth().currentUser?.email ?? "No email found")
+        //print(Auth.auth().currentUser?.email ?? "No email found")
         return Auth.auth().currentUser != nil
     }
 
@@ -154,11 +154,10 @@ class AuthViewModel: ObservableObject {
     func populateUser(email: String) async -> User{
         let db = Firestore.firestore()
         let docRef = db.collection("data").document(email)
-        var newUser = User()
-        print("email:", email)
+        //print("email:", email)
         do {
             let newUser = try await docRef.getDocument(as: User.self)
-            print("User: \(newUser)")
+            //print("User: \(newUser)")
             
             DispatchQueue.main.async {
                 self.user = newUser
@@ -236,5 +235,35 @@ class AuthViewModel: ObservableObject {
         } catch {
             print("Error adding user to house: \(error.localizedDescription)")
         }
+    }
+    
+    func fetchHouse(houseName: String) async -> House {
+        let db = Firestore.firestore()
+        let docRef = db.collection("houses").document(houseName)
+        //var newHouse = House()
+        print("house:", houseName)
+        do {
+            let newHouse = try await docRef.getDocument(as: House.self)
+            print("House: \(newHouse)")
+            
+            DispatchQueue.main.async {
+                self.house = newHouse
+            }
+            return newHouse
+            //print(user ?? "unable to convert user to string")
+        } catch {
+            print("Error decoding user: \(error)")
+            return House(name: houseName, createdBy: User())
+        }
+    }
+    
+    func printHouseMembers() {
+        print("\n\nHOUSE MEMBERS:")
+        print(house?.members)
+    }
+    
+    func printHouseMember(newUser: User) {
+        print("\n\nNEW HOUSE MEMBER:")
+        print(newUser)
     }
 }

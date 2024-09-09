@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct MemberView: View {
-    @EnvironmentObject var user: User
-    @EnvironmentObject var house: House
+    @State var user: User
+    @State var house: House
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ForEach(house.members) { member in
+            ForEach(self.house.members) { member in
+                let _ = viewModel.printHouseMember(newUser: member)
+
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Your Information:")
+                        //print("In MemberView. User Info:")
+                        
                         Text(member.name)
                         Text(member.email)
                         Text(member.password)
@@ -38,12 +42,17 @@ struct MemberView: View {
                 }
             }
         }
+        .onAppear {
+            Task {
+                self.house = await viewModel.fetchHouse(houseName: user.houses.first ?? "No house yet")
+            }
+        }
         
     }
 }
 
 struct MemberView_Previews: PreviewProvider {
     static var previews: some View {
-        MemberView()
+        MemberView(user: User(), house: House(name: "", createdBy: User()))
     }
 }
