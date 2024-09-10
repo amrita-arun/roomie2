@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		848F9C0E2C8FBAC600C51575 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F9C0D2C8FBAC600C51575 /* CalendarView.swift */; };
+		848F9C102C8FBDA700C51575 /* GroceryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F9C0F2C8FBDA700C51575 /* GroceryListView.swift */; };
+		848F9C142C8FC64300C51575 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F9C132C8FC64300C51575 /* NavigationView.swift */; };
 		849B087B2C8AC7A100B18D30 /* AddUsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B087A2C8AC7A100B18D30 /* AddUsersView.swift */; };
 		849B087D2C8BA8A700B18D30 /* MemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B087C2C8BA8A700B18D30 /* MemberView.swift */; };
 		84A93C622C6295AE00FEB700 /* roomie2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A93C612C6295AE00FEB700 /* roomie2App.swift */; };
@@ -31,6 +34,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		848F9C0D2C8FBAC600C51575 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		848F9C0F2C8FBDA700C51575 /* GroceryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListView.swift; sourceTree = "<group>"; };
+		848F9C132C8FC64300C51575 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		849B087A2C8AC7A100B18D30 /* AddUsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUsersView.swift; sourceTree = "<group>"; };
 		849B087C2C8BA8A700B18D30 /* MemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberView.swift; sourceTree = "<group>"; };
 		84A93C5E2C6295AE00FEB700 /* roomie2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = roomie2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +150,7 @@
 		84A93C7D2C62C71000FEB700 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				848F9C0D2C8FBAC600C51575 /* CalendarView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -151,6 +158,7 @@
 		84A93C7E2C62C71600FEB700 /* GroceryList */ = {
 			isa = PBXGroup;
 			children = (
+				848F9C0F2C8FBDA700C51575 /* GroceryListView.swift */,
 			);
 			path = GroceryList;
 			sourceTree = "<group>";
@@ -193,6 +201,7 @@
 				84AA8CDF2C75575200886F48 /* CreateHouseView.swift */,
 				849B087A2C8AC7A100B18D30 /* AddUsersView.swift */,
 				849B087C2C8BA8A700B18D30 /* MemberView.swift */,
+				848F9C132C8FC64300C51575 /* NavigationView.swift */,
 			);
 			path = CreateHouse;
 			sourceTree = "<group>";
@@ -279,12 +288,15 @@
 			files = (
 				84A93C642C6295AE00FEB700 /* ContentView.swift in Sources */,
 				84A93C862C62C77600FEB700 /* Roommate.swift in Sources */,
+				848F9C0E2C8FBAC600C51575 /* CalendarView.swift in Sources */,
 				84AA8CE02C75575200886F48 /* CreateHouseView.swift in Sources */,
 				849B087D2C8BA8A700B18D30 /* MemberView.swift in Sources */,
 				84A93C882C62C78300FEB700 /* Chore.swift in Sources */,
 				84A93C842C62C76600FEB700 /* House.swift in Sources */,
 				849B087B2C8AC7A100B18D30 /* AddUsersView.swift in Sources */,
+				848F9C102C8FBDA700C51575 /* GroceryListView.swift in Sources */,
 				84A93C922C62C7EF00FEB700 /* ProfileFormView.swift in Sources */,
+				848F9C142C8FC64300C51575 /* NavigationView.swift in Sources */,
 				84A93C8A2C62C79600FEB700 /* GroceryItem.swift in Sources */,
 				84A93C902C62C7DD00FEB700 /* LogInView.swift in Sources */,
 				84A93C8C2C62C7B500FEB700 /* ProfileView.swift in Sources */,

@@ -15,9 +15,14 @@ struct ContentView: View {
     var body: some View {
         Group {
             if viewModel.isUserLoggedIn() == true {
+                NavigationView()
+                    .environmentObject(user)
+                    .environmentObject(house)
+                /*
                 HomeView(user: User())
                     .environmentObject(user)
                     .environmentObject(house)
+                 */
                 
             }
             else {

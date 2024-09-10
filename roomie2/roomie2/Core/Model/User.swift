@@ -23,7 +23,7 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
     @Published var guestFreq: [String] = []
     @Published var guestPref: [String] = []
     @Published var communicationPref: [String] = []
-    @Published var houses: [String] = []
+    @Published var house = ""
 
     
     enum CodingKeys: String, CodingKey {
@@ -39,7 +39,7 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
         case guestFreq
         case guestPref
         case communicationPref
-        case houses
+        case house
     }
     
     init() { }
@@ -58,7 +58,7 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
         guestFreq = try container.decodeIfPresent([String].self, forKey: .guestFreq) ?? []
         guestPref = try container.decodeIfPresent([String].self, forKey: .guestPref) ?? []
         communicationPref = try container.decodeIfPresent([String].self, forKey: .communicationPref) ?? []
-        houses = try container.decodeIfPresent([String].self, forKey: .houses) ?? []
+        house = try container.decodeIfPresent(String.self, forKey: .house) ?? ""
 
     }
         /*
@@ -92,7 +92,7 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
         try container.encode(guestFreq, forKey: .guestFreq)
         try container.encode(guestPref, forKey: .guestPref)
         try container.encode(communicationPref, forKey: .communicationPref)
-        try container.encode(houses, forKey: .houses)
+        try container.encode(house, forKey: .house)
 
         /*
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -126,7 +126,7 @@ class User: ObservableObject, Codable, CustomStringConvertible, Identifiable{
             guestFrequency: \(guestFreq),
             guestPreferences: \(guestPref),
             communicationPreferences: \(communicationPref)
-            houses: \(houses)
+            houses: \(house)
 
         )
         """

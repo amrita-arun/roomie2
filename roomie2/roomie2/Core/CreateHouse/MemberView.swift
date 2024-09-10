@@ -14,6 +14,7 @@ struct MemberView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            
             ForEach(self.house.members) { member in
                 let _ = viewModel.printHouseMember(newUser: member)
 
@@ -44,7 +45,7 @@ struct MemberView: View {
         }
         .onAppear {
             Task {
-                self.house = await viewModel.fetchHouse(houseName: user.houses.first ?? "No house yet")
+                self.house = await viewModel.fetchHouse(houseName: user.house)
             }
         }
         

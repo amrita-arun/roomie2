@@ -187,6 +187,20 @@ class AuthViewModel: ObservableObject {
          */
     }
     
+    func addHouseToUser(user2: User, houseName: String) async {
+        let users = db.collection("data").document(user2.email)
+
+        // Set the "capital" field of the city 'DC'
+        do {
+          try await users.updateData([
+            "houses": houseName
+          ])
+          print("Document successfully updated")
+        } catch {
+          print("Error updating document: \(error)")
+        }
+    }
+    
     func getUserEmail() -> String {
         if (isUserLoggedIn()) {
             return Auth.auth().currentUser?.email ?? "No email found"
@@ -239,7 +253,7 @@ class AuthViewModel: ObservableObject {
     
     func fetchHouse(houseName: String) async -> House {
         let db = Firestore.firestore()
-        let docRef = db.collection("houses").document(houseName)
+        let docRef = db.collection("houses").document("Baddies")
         //var newHouse = House()
         print("house:", houseName)
         do {

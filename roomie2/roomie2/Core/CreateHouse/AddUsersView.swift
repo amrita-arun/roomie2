@@ -37,6 +37,7 @@ struct AddUsersView: View {
                .background(Color.blue)
                .foregroundColor(.white)
                .cornerRadius(5.0)
+               .disabled(searchText == user.email)
                
                
                List(searchResults) { newUser in
@@ -46,7 +47,10 @@ struct AddUsersView: View {
                        Button("Add to House") {
                            print("User from search", newUser)
                            house.members.append(newUser)
-                           newUser.houses.append(house.name)
+                           newUser.house.append(house.name)
+                           Task {
+                               await viewModel.addHouseToUser(user2: newUser, houseName: house.name)
+                           }
                        }
                        .padding()
                        .background(Color.green)
@@ -54,6 +58,8 @@ struct AddUsersView: View {
                        .cornerRadius(5.0)
                    }
                }
+               
+               //let _ = viewModel.addHouseToUser(user2: user, houseName: house.name)
            }
            .padding()
            .navigationTitle("Add Users to House")
@@ -63,6 +69,7 @@ struct AddUsersView: View {
                print(house.members)
                Task {
                    await viewModel.createHouse(house: house)
+                   await viewModel.addHouseToUser(user2: user, houseName: house.name)
                }
            })
            {

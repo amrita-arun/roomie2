@@ -26,7 +26,7 @@ struct CreateHouseView: View {
                 Button(action: {
                     showAddUsers = true
                     print("showAddUsers is true")
-                    user.houses.append(house.name)
+                    user.house = house.name
                     house.createdBy = user
                     house.members.removeAll()
                     house.members.append(user)

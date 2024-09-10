@@ -394,7 +394,8 @@ struct FourthScreen : View {
                        }
                    }
                    .navigationDestination(isPresented: $showHomeView) {
-                       HomeView(user: User())
+                       NavigationView()
+                       //HomeView(user: User())
                           // .environmentObject(user)
                    }
                     

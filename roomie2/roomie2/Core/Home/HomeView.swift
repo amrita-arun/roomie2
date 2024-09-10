@@ -90,6 +90,8 @@ struct HomeView: View {
                     PreferenceSection(title: "Guest Frequency", preferences: user.guestFreq)
                     PreferenceSection(title: "Guest Preferences", preferences: user.guestPref)
                     PreferenceSection(title: "Communication Preferences", preferences: user.communicationPref)
+                    Text(user.house)
+
                 }
             }
         }

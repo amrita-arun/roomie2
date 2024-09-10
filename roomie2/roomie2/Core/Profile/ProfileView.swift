@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var user: User
+    @State var user: User
+    @EnvironmentObject var viewModel: AuthViewModel
 
     var body: some View {
         ScrollView {
@@ -36,6 +37,12 @@ struct ProfileView: View {
             .padding()
             .navigationTitle("Your Profile")
         }
+        .onAppear {
+            Task {
+                self.user = await viewModel.populateUser(email: self.viewModel.getUserEmail())
+                //self.user = viewModel.user ?? User()
+            }
+        }
     }
 }
 
@@ -57,8 +64,8 @@ struct ProfileSection: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
-            .environmentObject(User())
+        ProfileView(user: User())
+           // .environmentObject(User())
     }
 }
 
